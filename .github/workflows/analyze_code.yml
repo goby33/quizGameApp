@@ -1,0 +1,22 @@
+name: Analyze code
+
+on:
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  check-branch-name:
+    name: Analyze code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run test check
+        run: dart format --set-exit-if-changed .
