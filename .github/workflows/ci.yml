@@ -1,0 +1,31 @@
+name: CI Checks
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Run dart format
+        run: dart format --set-exit-if-changed .
+
+      - name: Run tests
+        run: dart test
+
+      - name: Run SonarCloud scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner -Dsonar.projectKey=ton-projet -Dsonar.organization=ton-org
