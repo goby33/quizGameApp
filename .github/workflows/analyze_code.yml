@@ -22,7 +22,9 @@ jobs:
         uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-
+      - name: add pub get
+        run: flutter pub get
+        
       - name: Run Flutter build_runner
         run: dart run build_runner build --delete-conflicting-outputs
 
