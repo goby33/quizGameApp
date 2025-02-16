@@ -23,6 +23,10 @@ jobs:
         with:
           sdk: stable
 
+      - name: Run Flutter build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+
       - name: Run Dart format check
         run: dart format --set-exit-if-changed .
 
