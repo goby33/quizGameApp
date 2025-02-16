@@ -1,10 +1,15 @@
+name: Test, Build and Release apk/aab
+
 on:
   push:
-    branches: [develop, master]
-    paths-ignore:
-      - "**/README.md"
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - develop
+      - master
 
-name: Test, Build and Release apk/aab
+
 
 jobs:
   build:
