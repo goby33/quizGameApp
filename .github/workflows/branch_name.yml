@@ -1,0 +1,35 @@
+name: Branch name check
+
+on:
+  push:
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  check-branch-name:
+    name: Check branch naming conventions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check branch name format
+        run: |
+          echo "Checking branch name: ${{ github.ref_name }}..."
+          ALLOWED_PREFIXES=("feature" "feat" "fix" "hotfix" "release" "chore" "docs")
+
+          for PREFIX in "${ALLOWED_PREFIXES[@]}"; do
+            if [[ "${{ github.ref_name }}" == "$PREFIX/"* ]]; then
+              echo "[SUCCESS] - Branch name respects the naming convention ($PREFIX)"
+              exit 0
+            fi
+          done
+
+          echo "[FAIL] - Branch name '${{ github.ref_name }}' does not follow the naming convention."
+          echo "Please rename it using one of the allowed prefixes: ${ALLOWED_PREFIXES[*]}"
+          exit 1
