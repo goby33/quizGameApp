@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Nécessaire pour SonarQube
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -40,7 +42,11 @@ jobs:
       - name: Run tests
         run: flutter test
 
+      - name: Build Flutter project
+        run: flutter build apk --debug  # Étape requise pour SonarQube
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # Ajoute si tu as un serveur privé SonarQube
