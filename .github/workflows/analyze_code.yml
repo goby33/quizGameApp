@@ -18,12 +18,12 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17' # Mets la version que ton projet utilise
+          java-version: '17'
 
       - name: Set up Flutter (si ton projet est en Dart/Flutter)
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x' # Mets la version de Flutter que tu utilises
+          flutter-version: '3.x'
 
       - name: Install dependencies
         run: flutter pub get
